@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter import colorchooser
 from io import open
 
 # VARIABLE GLOBAL - la utilizaremeso para almacenar la ruta de un fichero
@@ -62,7 +63,17 @@ def guardar_como():
         mensaje.set('guardado cancelado')
         ruta = ''
 
-
+#ELEGIR UN COLOR
+def color_texto():
+    color= colorchooser.askcolor(title='que color quieres')
+    color_text= color[1]
+    texto.config(fg='{}'.format(color_text))
+    color_editor.config(fg='{}'.format(color_text))
+def color_fondo():
+    color= colorchooser.askcolor(title='que color quieres')
+    color_bg= color[1]
+    texto.config(bg='{}'.format(color_bg))
+    
 
 # CREAR LA RAIZ
 
@@ -82,7 +93,15 @@ filemenu.add_command(label='Guardar Como',command=guardar_como)
 filemenu.add_separator()
 filemenu.add_command(label='Salir', command=root.quit)
 
+formatmenu = Menu(menubar,tearoff=0)
+formatmenu.add_command(label='Color Texto', command=color_texto)
+formatmenu.add_command(label ='Color Fondo',command=color_fondo)
+
+
 menubar.add_cascade(menu=filemenu, label='Archivo')
+menubar.add_cascade(menu=formatmenu, label='Color')
+
+
 
 root.config(menu=menubar)
 
@@ -96,6 +115,8 @@ mensaje= StringVar()
 mensaje.set('Bienvenido')
 monitor =Label(root,textvar=mensaje, justify='left')
 monitor.pack(side='left')
+color_editor = Label(root,text='Color Texto', justify= 'center')
+color_editor.pack(side='bottom')
 
 
 
